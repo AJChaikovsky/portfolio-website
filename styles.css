@@ -857,3 +857,7 @@ img {
   background: #d97706;
   vertical-align: 1px;
 }
+
+.btn[hidden] {
+  display: none;
+}
