@@ -373,8 +373,8 @@ function onEnter(target, fn) {
   io.observe(target);
 }
 
-/* ---------- Resume links: only shown once resume.pdf has been added ---------- */
-fetch("resume.pdf", { method: "HEAD" })
+/* ---------- Resume links: only shown once the resume PDF has been added ---------- */
+fetch("anthony-chaikovsky-resume.pdf", { method: "HEAD" })
   .then((res) => {
     if (res.ok) document.querySelectorAll(".resume-link").forEach((a) => (a.hidden = false));
   })

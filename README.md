@@ -16,7 +16,7 @@ A simple static portfolio site: plain HTML, CSS and JavaScript, with no build st
 2. Edit the projects in `projects.js`. When a demo is live, add `demo: "https://..."` and the
    "Demo coming soon" badge becomes a link.
 3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a project.
-   Put your resume at `resume.pdf` and the "Resume" buttons appear automatically.
+   Put your resume at `anthony-chaikovsky-resume.pdf` and the "Resume" buttons appear automatically.
    `og-image.png` is the preview image shown when the link is shared; `favicon.svg` is the tab icon.
 4. To change the accent color, edit `--accent` in `styles.css`. The intro background colors are `--glow-1/2/3`.
 5. The rotating words after "I build" are in `data-words="..."` in `index.html`.
