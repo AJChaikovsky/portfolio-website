@@ -6,13 +6,13 @@ A simple static portfolio site: plain HTML, CSS and JavaScript, with no build st
 
 - `index.html`: page structure (hero, projects, about, contact)
 - `projects.js`: **your project list**. Edit this to add projects.
-- `main.js`: project cards, filters, animations, terminal text (`TERMINAL_LINES` at the top)
+- `main.js`: project cards, animations, terminal text (`TERMINAL_LINES` at the top)
 - `background.js`: the animated gradient behind the intro (WebGL)
 - `styles.css`: all styling; colors are variables at the top
 
 ## Customize
 
-1. Search `index.html` for "Your Name", "you@example.com" and "yourusername" and replace them.
+1. Name, email and links live in `index.html`; the about text is in the About section there.
 2. Edit the projects in `projects.js`. When a demo is live, add `demo: "https://..."` and the
    "Demo coming soon" badge becomes a link.
 3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a project.

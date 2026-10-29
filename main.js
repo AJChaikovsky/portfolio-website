@@ -2,9 +2,9 @@
 // Each entry is either a command ({ cmd }) or output ({ out, cls }); cls is "muted" or "accent".
 const TERMINAL_LINES = [
   { cmd: "whoami" },
-  { out: "Your Name: developer, builder, tinkerer", cls: "accent" },
+  { out: "AJ Chaikovsky: CS + Business @ USC, builder of things", cls: "accent" },
   { cmd: "cat focus.txt" },
-  { out: "Web apps, tools, and small experiments.", cls: "muted" },
+  { out: "LLM systems, data pipelines, and full-stack apps people actually use.", cls: "muted" },
   { cmd: "ls projects/" },
   { out: "__PROJECTS__", cls: "muted" }, // replaced with your project names from projects.js
 ];
@@ -50,11 +50,12 @@ function splitText(node, mode) {
 }
 
 /* ---------- Project cards ---------- */
-const HUES = ["rgba(124,58,237,0.16)", "rgba(37,99,235,0.14)", "rgba(26,122,10,0.12)", "rgba(217,119,6,0.14)"];
+const GITHUB_ICON =
+  '<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+const HUES = ["rgba(37,99,235,0.18)", "rgba(30,64,175,0.2)", "rgba(14,116,144,0.16)", "rgba(59,130,246,0.14)"];
 
 PROJECTS.forEach((project, i) => {
   const card = el("article", "project-card");
-  card.dataset.tags = (project.tags || []).map(slug).join(" ");
 
   const thumb = el("div", "project-thumb");
   if (project.image) {
@@ -75,7 +76,21 @@ PROJECTS.forEach((project, i) => {
   card.appendChild(thumb);
 
   const body = el("div", "project-body");
-  body.appendChild(el("h3", null, project.title));
+  const titleRow = el("div", "project-title");
+  titleRow.appendChild(el("h3", null, project.title));
+  if (project.code) {
+    const gh = el("a", "gh-link");
+    gh.href = project.code;
+    gh.target = "_blank";
+    gh.rel = "noopener";
+    gh.setAttribute("aria-label", `${project.title} on GitHub`);
+    gh.title = "View on GitHub";
+    gh.innerHTML = GITHUB_ICON;
+    titleRow.appendChild(gh);
+  }
+  if (project.inProgress) titleRow.appendChild(el("span", "status-badge", "in progress"));
+  body.appendChild(titleRow);
+  if (project.subtitle) body.appendChild(el("p", "project-subtitle", project.subtitle));
   body.appendChild(el("p", null, project.description));
 
   if (project.tags && project.tags.length) {
@@ -93,13 +108,6 @@ PROJECTS.forEach((project, i) => {
     links.appendChild(a);
   } else {
     links.appendChild(el("span", "badge", "demo coming soon"));
-  }
-  if (project.code) {
-    const a = el("a", "link", "Code ↗");
-    a.href = project.code;
-    a.target = "_blank";
-    a.rel = "noopener";
-    links.appendChild(a);
   }
   body.appendChild(links);
 
@@ -131,49 +139,6 @@ cards.forEach((card) => {
     if (animate) gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" });
   });
 });
-
-/* ---------- Filters (blur swap between states) ---------- */
-const filtersEl = document.getElementById("filters");
-const allTags = [...new Set(PROJECTS.flatMap((p) => p.tags || []))];
-let currentFilter = "all";
-
-["All", ...allTags].forEach((tag) => {
-  const value = tag === "All" ? "all" : slug(tag);
-  const btn = el("button", "filter", tag);
-  btn.type = "button";
-  btn.dataset.value = value;
-  btn.setAttribute("aria-pressed", value === "all" ? "true" : "false");
-  btn.addEventListener("click", () => setFilter(value));
-  filtersEl.appendChild(btn);
-});
-
-function setFilter(value) {
-  if (value === currentFilter) return;
-  currentFilter = value;
-  filtersEl.querySelectorAll(".filter").forEach((b) =>
-    b.setAttribute("aria-pressed", b.dataset.value === value ? "true" : "false")
-  );
-  const matches = (c) => value === "all" || c.dataset.tags.split(" ").includes(value);
-  const apply = () => cards.forEach((c) => c.classList.toggle("hidden", !matches(c)));
-
-  if (!animate) return apply();
-  const visibleNow = cards.filter((c) => !c.classList.contains("hidden"));
-  gsap.to(visibleNow, {
-    opacity: 0,
-    filter: "blur(8px)",
-    duration: 0.15,
-    ease: "power2.in",
-    onComplete() {
-      apply();
-      const shown = cards.filter((c) => !c.classList.contains("hidden"));
-      gsap.fromTo(
-        shown,
-        { opacity: 0, filter: "blur(8px)", y: 8 },
-        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.45, ease: "expo.out", stagger: 0.05, clearProps: "filter" }
-      );
-    },
-  });
-}
 
 /* ---------- Terminal typing ---------- */
 function runTerminal() {

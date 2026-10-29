@@ -13,16 +13,16 @@
   --text-tertiary: #999999;
   --heading: #0a0a0a;
   --on-heading: #ffffff;
-  --accent: #7c3aed;
-  --accent-light: rgba(124, 58, 237, 0.06);
-  --accent-border: rgba(124, 58, 237, 0.2);
+  --accent: #1d4ed8;
+  --accent-light: rgba(29, 78, 216, 0.06);
+  --accent-border: rgba(29, 78, 216, 0.22);
   --green: #1a7a0a;
-  --spot: rgba(124, 58, 237, 0.07);
-  --selection: rgba(128, 128, 128, 0.2);
+  --spot: rgba(29, 78, 216, 0.07);
+  --selection: rgba(29, 78, 216, 0.15);
   /* Hero background glow colours (read by background.js) */
-  --glow-1: #c4b5fd;
-  --glow-2: #93c5fd;
-  --glow-3: #fcd9a8;
+  --glow-1: #93c5fd;
+  --glow-2: #bfdbfe;
+  --glow-3: #a5b4fc;
   --glow-strength: 0.55;
 
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -44,15 +44,15 @@
     --text-tertiary: #666666;
     --heading: #f5f5f5;
     --on-heading: #0a0a0a;
-    --accent: #a78bfa;
-    --accent-light: rgba(167, 139, 250, 0.1);
-    --accent-border: rgba(167, 139, 250, 0.3);
+    --accent: #3b82f6;
+    --accent-light: rgba(37, 99, 235, 0.12);
+    --accent-border: rgba(37, 99, 235, 0.38);
     --green: #22c55e;
-    --spot: rgba(167, 139, 250, 0.09);
-    --selection: rgba(255, 255, 255, 0.15);
-    --glow-1: #5b21b6;
-    --glow-2: #1e3a8a;
-    --glow-3: #7c2d12;
+    --spot: rgba(37, 99, 235, 0.1);
+    --selection: rgba(59, 130, 246, 0.3);
+    --glow-1: #1e3a8a;
+    --glow-2: #172554;
+    --glow-3: #1e40af;
     --glow-strength: 0.6;
     color-scheme: dark;
   }
@@ -69,15 +69,15 @@
   --text-tertiary: #666666;
   --heading: #f5f5f5;
   --on-heading: #0a0a0a;
-  --accent: #a78bfa;
-  --accent-light: rgba(167, 139, 250, 0.1);
-  --accent-border: rgba(167, 139, 250, 0.3);
+  --accent: #3b82f6;
+  --accent-light: rgba(37, 99, 235, 0.12);
+  --accent-border: rgba(37, 99, 235, 0.38);
   --green: #22c55e;
-  --spot: rgba(167, 139, 250, 0.09);
-  --selection: rgba(255, 255, 255, 0.15);
-  --glow-1: #5b21b6;
-  --glow-2: #1e3a8a;
-  --glow-3: #7c2d12;
+  --spot: rgba(37, 99, 235, 0.1);
+  --selection: rgba(59, 130, 246, 0.3);
+  --glow-1: #1e3a8a;
+  --glow-2: #172554;
+  --glow-3: #1e40af;
   --glow-strength: 0.6;
   color-scheme: dark;
 }
@@ -794,4 +794,66 @@ img {
   .cursor {
     animation: none;
   }
+}
+
+/* ---------- Project title row (title + GitHub icon) ---------- */
+.project-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.project-title h3 {
+  margin: 0;
+}
+
+.gh-link {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.3s var(--ease-out);
+}
+
+.gh-link:hover,
+.gh-link:focus-visible {
+  color: var(--heading);
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+}
+
+.project-body .project-subtitle {
+  margin: 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--accent);
+}
+
+.status-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+
+.status-badge::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #d97706;
+  vertical-align: 1px;
 }
