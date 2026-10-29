@@ -1,6 +1,11 @@
-# Portfolio
+# AJ Chaikovsky — Portfolio
 
-A simple static portfolio site: plain HTML, CSS and JavaScript, with no build step.
+**Live site: [ajchaikovsky.com](https://ajchaikovsky.com)**
+
+[![Portfolio preview](og-image.png)](https://ajchaikovsky.com)
+
+My personal portfolio: the projects I've built, a bit about me, and how to reach me.
+It's a simple static site (plain HTML, CSS and JavaScript, no build step) hosted on GitHub Pages.
 
 ## Files
 
