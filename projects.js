@@ -19,7 +19,7 @@ const PROJECTS = [
     code: "https://github.com/AJChaikovsky/mini-vllm",
   },
   {
-    title: "Beta Leads",
+    title: "CRE Leads",
     subtitle: "AI lead generation for commercial real estate",
     description:
       "A real brokerage uses this every day. It pulls in 15 LA city datasets plus county property records, uses Claude to spot restaurants and shops that will need a new storefront soon, and puts them in front of brokers before anyone else finds them. The pipeline is safe to rerun and recovers from failures on its own, so it keeps working without anyone watching it.",
