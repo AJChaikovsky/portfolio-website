@@ -57,4 +57,13 @@ const PROJECTS = [
     code: "https://github.com/AJChaikovsky/gamesense-ai",
     inProgress: true,
   },
+  {
+    title: "OpenDrop",
+    subtitle: "AirDrop for every OS",
+    description:
+      "AirDrop only works between Apple devices. OpenDrop will let Mac, Windows, and Linux machines on the same network find each other and trade files with no accounts and no cloud. Nearby devices show up on their own over mDNS, so you pick \"AJ's MacBook\" instead of typing an IP, and files stream straight from one machine to the other in chunks over a small versioned protocol I designed. It's a Rust core with a Tauri desktop app on top, so every platform runs the same code.",
+    tags: ["Rust", "Tokio", "mDNS", "Tauri"],
+    code: "https://github.com/AJChaikovsky/OpenDrop",
+    inProgress: true,
+  },
 ];
