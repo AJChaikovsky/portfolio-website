@@ -18,8 +18,9 @@ It's a simple static site (plain HTML, CSS and JavaScript, no build step) hosted
 ## Customize
 
 1. Name, email and links live in `index.html`; the about text is in the About section there.
-2. Edit the projects in `projects.js`. When a demo is live, add `demo: "https://..."` and the
-   "Demo coming soon" badge becomes a link.
+2. Edit the projects in `projects.js`: adding a project is one new entry. Set `featured: true` on
+   3–4 of them for the large cards; the rest go in the compact "More projects" grid. Each needs a
+   `status` ("Shipped", "In active use", or "In progress"). The field list is at the top of the file.
 3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a project.
    Put your resume at `anthony-chaikovsky-resume.pdf` and the "Resume" buttons appear automatically.
    `og-image.png` is the preview image shown when the link is shared; `favicon.svg` is the tab icon.

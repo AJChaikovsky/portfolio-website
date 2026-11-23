@@ -54,43 +54,55 @@ const GITHUB_ICON =
   '<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
 const HUES = ["rgba(37,99,235,0.18)", "rgba(30,64,175,0.2)", "rgba(14,116,144,0.16)", "rgba(59,130,246,0.14)"];
 
-PROJECTS.forEach((project, i) => {
-  const card = el("article", "project-card");
+const STATUS_CLASS = { Shipped: "shipped", "In active use": "active", "In progress": "progress" };
 
-  const thumb = el("div", "project-thumb");
-  if (project.image) {
-    const img = document.createElement("img");
-    img.src = project.image;
-    img.alt = `Screenshot of ${project.title}`;
-    img.loading = "lazy";
-    thumb.appendChild(img);
-  } else {
-    const ph = el("div", "thumb-placeholder");
-    ph.style.setProperty("--hue", HUES[i % HUES.length]);
-    ph.style.setProperty("--hx", `${20 + ((i * 37) % 60)}%`);
-    ph.style.setProperty("--hy", `${25 + ((i * 53) % 50)}%`);
-    thumb.appendChild(ph);
-    thumb.appendChild(el("span", "thumb-title", project.title));
+function externalLink(className, text, href) {
+  const a = el("a", className, text);
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener";
+  return a;
+}
+
+function buildCard(project, i, compact) {
+  const card = el("article", compact ? "project-card compact" : "project-card");
+
+  if (!compact) {
+    const thumb = el("div", "project-thumb");
+    if (project.image) {
+      const img = document.createElement("img");
+      img.src = project.image;
+      img.alt = `Screenshot of ${project.title}`;
+      img.loading = "lazy";
+      thumb.appendChild(img);
+    } else {
+      const ph = el("div", "thumb-placeholder");
+      ph.style.setProperty("--hue", HUES[i % HUES.length]);
+      ph.style.setProperty("--hx", `${20 + ((i * 37) % 60)}%`);
+      ph.style.setProperty("--hy", `${25 + ((i * 53) % 50)}%`);
+      thumb.appendChild(ph);
+      thumb.appendChild(el("span", "thumb-title", project.title));
+    }
+    thumb.appendChild(el("span", "thumb-index", String(i + 1).padStart(2, "0")));
+    card.appendChild(thumb);
   }
-  thumb.appendChild(el("span", "thumb-index", String(i + 1).padStart(2, "0")));
-  card.appendChild(thumb);
 
   const body = el("div", "project-body");
   const titleRow = el("div", "project-title");
   titleRow.appendChild(el("h3", null, project.title));
   if (project.code) {
-    const gh = el("a", "gh-link");
-    gh.href = project.code;
-    gh.target = "_blank";
-    gh.rel = "noopener";
+    const gh = externalLink("gh-link", null, project.code);
     gh.setAttribute("aria-label", `${project.title} on GitHub`);
     gh.title = "View on GitHub";
     gh.innerHTML = GITHUB_ICON;
     titleRow.appendChild(gh);
   }
-  if (project.inProgress) titleRow.appendChild(el("span", "status-badge", "in progress"));
+  if (project.status) {
+    const cls = STATUS_CLASS[project.status] || "progress";
+    titleRow.appendChild(el("span", `status-badge status-${cls}`, project.status));
+  }
   body.appendChild(titleRow);
-  if (project.subtitle) body.appendChild(el("p", "project-subtitle", project.subtitle));
+  if (project.hook) body.appendChild(el("p", "project-subtitle", project.hook));
   body.appendChild(el("p", null, project.description));
 
   if (project.tags && project.tags.length) {
@@ -100,22 +112,24 @@ PROJECTS.forEach((project, i) => {
   }
 
   const links = el("div", "project-links");
-  if (project.demo) {
-    const a = el("a", "link", "Live demo ↗");
-    a.href = project.demo;
-    a.target = "_blank";
-    a.rel = "noopener";
-    links.appendChild(a);
-  } else {
-    links.appendChild(el("span", "badge", "demo coming soon"));
-  }
-  body.appendChild(links);
+  if (project.demo) links.appendChild(externalLink("link", `${project.demoLabel || "Live demo"} ↗`, project.demo));
+  if (project.caseStudy) links.appendChild(externalLink("link", "Case study ↗", project.caseStudy));
+  (project.comingSoon || []).forEach((what) => links.appendChild(el("span", "badge", `${what} coming soon`)));
+  if (project.note) links.appendChild(el("span", "badge", project.note));
+  if (links.children.length) body.appendChild(links);
 
   card.appendChild(body);
-  grid.appendChild(card);
-});
+  return card;
+}
 
-const cards = Array.from(grid.children);
+const moreGrid = document.getElementById("more-grid");
+const featured = PROJECTS.filter((p) => p.featured);
+const more = PROJECTS.filter((p) => !p.featured);
+featured.forEach((p, i) => grid.appendChild(buildCard(p, i, false)));
+more.forEach((p, i) => moreGrid.appendChild(buildCard(p, i, true)));
+if (!more.length) document.getElementById("more-projects").hidden = true;
+
+const cards = Array.from(document.querySelectorAll(".project-card"));
 
 /* ---------- Card hover: spotlight follows the cursor + slight 3D tilt ---------- */
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -352,10 +366,12 @@ function scrollReveals() {
   });
 
   // Project cards: staggered as the grid comes into view
-  gsap.set(cards, { y: 24 });
-  onEnter(grid, () =>
-    gsap.to(cards, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 })
-  );
+  [grid, moreGrid].forEach((g) => {
+    const items = Array.from(g.children);
+    if (!items.length) return;
+    gsap.set(items, { y: 24 });
+    onEnter(g, () => gsap.to(items, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 }));
+  });
 }
 
 function onEnter(target, fn) {

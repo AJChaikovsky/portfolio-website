@@ -615,6 +615,7 @@ img {
   margin-top: auto;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
   padding-top: 4px;
   position: relative;
@@ -860,4 +861,66 @@ img {
 
 .btn[hidden] {
   display: none;
+}
+
+/* ---------- Featured vs. "More projects" ---------- */
+.featured-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+}
+
+.more-projects {
+  margin-top: 56px;
+}
+
+.more-projects[hidden] {
+  display: none;
+}
+
+.more-title {
+  margin: 0 0 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.more-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}
+
+.project-card.compact .project-body {
+  padding: 18px 20px 20px;
+}
+
+.project-card.compact .project-body p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.project-card.compact .project-body .project-subtitle {
+  font-size: 0.72rem;
+}
+
+/* Status colours: shipped = green, in active use = accent, in progress = amber */
+.status-shipped::before {
+  background: #16a34a;
+}
+
+.status-active::before {
+  background: var(--accent);
+}
+
+.status-progress::before {
+  background: #d97706;
+}
+
+@media (max-width: 640px) {
+  .featured-grid,
+  .more-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-title {
+    flex-wrap: wrap;
+  }
 }
