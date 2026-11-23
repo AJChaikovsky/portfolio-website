@@ -1,4 +1,5 @@
-// Builds the Work section from projects.js and wires up the small bits of interaction.
+// Builds the Work section from projects.js, types the hero terminal, and wires up the small
+// bits of interaction.
 // No libraries: everything here is plain DOM code.
 
 const root = document.documentElement;
@@ -92,6 +93,8 @@ function buildPanel(project) {
       readout.appendChild(row);
     });
     panel.appendChild(readout);
+  } else {
+    panel.classList.add("panel-plain"); // no results column: the story uses the full width
   }
   return panel;
 }
@@ -121,7 +124,7 @@ const rest = PROJECTS.filter((p) => !p.featured);
 rest.forEach((p) => moreList.appendChild(buildRow(p)));
 if (!rest.length) document.getElementById("more").hidden = true;
 
-/* ---------- The one animation: headline numbers count up when a panel scrolls into view ---------- */
+/* ---------- Headline numbers count up when a panel scrolls into view ---------- */
 function decimals(n) {
   const s = String(n);
   return s.includes(".") ? s.split(".")[1].length : 0;
@@ -161,6 +164,74 @@ if (!reduceMotion && "IntersectionObserver" in window) {
     io.observe(panel);
   });
 }
+
+/* ---------- Hero terminal: types these lines out once on load ---------- */
+// Each entry is a command ({ cmd }) or output ({ out, cls }); cls is "muted" or "accent".
+const TERMINAL_LINES = [
+  { cmd: "whoami" },
+  { out: "AJ Chaikovsky: CS + Business @ USC", cls: "accent" },
+  { cmd: "cat focus.txt" },
+  { out: "LLM systems, data pipelines, and full-stack apps people actually use.", cls: "muted" },
+  { cmd: "ls projects/" },
+  { out: "__PROJECTS__", cls: "muted" }, // replaced with the project names from projects.js
+];
+
+function slug(s) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+function terminalLine(line, full) {
+  const div = el("div");
+  if (line.cmd) {
+    div.appendChild(el("span", "prompt", "$ "));
+    div.appendChild(el("span", "typed", full ? line.cmd : ""));
+  } else {
+    div.appendChild(el("span", line.cls || "", line.out));
+  }
+  return div;
+}
+
+function runTerminal() {
+  const body = document.getElementById("terminal-body");
+  const names = PROJECTS.map((p) => slug(p.title) + "/").join("  ");
+  const lines = TERMINAL_LINES.map((l) => (l.out === "__PROJECTS__" ? { ...l, out: names } : l));
+  const cursor = el("span", "cursor");
+  cursor.setAttribute("aria-hidden", "true");
+
+  if (reduceMotion) {
+    lines.forEach((l) => body.appendChild(terminalLine(l, true)));
+    body.appendChild(cursor);
+    return;
+  }
+
+  let i = 0;
+  function next() {
+    if (i >= lines.length) {
+      body.appendChild(cursor);
+      return;
+    }
+    const line = lines[i++];
+    if (line.cmd) {
+      const node = terminalLine(line, false);
+      const typed = node.querySelector(".typed");
+      body.appendChild(node);
+      node.appendChild(cursor);
+      let c = 0;
+      const tick = () => {
+        typed.textContent = line.cmd.slice(0, ++c);
+        if (c < line.cmd.length) setTimeout(tick, 45 + Math.random() * 50);
+        else setTimeout(next, 350);
+      };
+      setTimeout(tick, 400);
+    } else {
+      body.appendChild(terminalLine(line, true));
+      setTimeout(next, 250);
+    }
+  }
+  next();
+}
+
+runTerminal();
 
 /* ---------- Nav: mark the section in view ---------- */
 const navLinks = Array.from(document.querySelectorAll("#nav-links a"));

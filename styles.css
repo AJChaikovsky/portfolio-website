@@ -14,6 +14,7 @@
   --focus: #7dd3fc;
 
   --font: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   /* Type scale (about 1.25): 14 / 17 / 20 / 25 / 36 / 60 */
   --step--1: 0.875rem;
   --step-0: 1.0625rem;
@@ -231,6 +232,80 @@ a {
 .hero {
   padding-top: clamp(72px, 14vh, 140px);
   padding-bottom: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
+}
+
+/* ---------- Hero terminal ---------- */
+.terminal {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.terminal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--rule-strong);
+}
+
+.terminal-title {
+  margin: 0 auto;
+  transform: translateX(-14px);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
+.terminal-body {
+  margin: 0;
+  padding: 18px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.9;
+  min-height: 15.5em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+}
+
+.terminal-body .prompt {
+  color: var(--status-active);
+}
+
+.terminal-body .muted {
+  color: var(--muted);
+}
+
+.terminal-body .accent {
+  color: var(--signal);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--text);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero h1 {
@@ -358,6 +433,10 @@ a {
   background: var(--panel);
   border: 1px solid var(--rule);
   border-radius: var(--radius);
+}
+
+.panel.panel-plain {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .panel-image {
@@ -537,6 +616,11 @@ a {
 
 /* ---------- Smaller screens ---------- */
 @media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
   .panel {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -605,5 +689,9 @@ a {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .cursor {
+    animation: none;
   }
 }

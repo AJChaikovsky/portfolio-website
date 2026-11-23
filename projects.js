@@ -45,7 +45,6 @@ const PROJECTS = [
     metrics: [
       { value: 15, unit: "", label: "LA city datasets, plus county property records" },
       { value: 3, unit: "", label: "rounds of demos to find the right product" },
-      { value: "Daily", unit: "", label: "use by the brokerage's team" },
     ],
     tags: ["Python", "Next.js", "TypeScript", "PostgreSQL", "Claude API"],
     note: "Private client tool",
@@ -57,10 +56,6 @@ const PROJECTS = [
       "Home games end with someone doing messy math on a napkin. ChipBank handles accounts, friends, and crews, runs each game with a timer, logs buy-ins, rebuys, and cash-outs live on every phone (players can leave and rejoin mid-game), then calculates the shortest list of who pays whom with a Venmo button for each. It never touches money: amounts are integer cents in an append-only ledger, every write is checked by a Postgres function, and the settlement math has property-based tests.",
     status: "Shipped",
     featured: true,
-    metrics: [
-      { value: "n − 1", unit: "", label: "payments at most to settle any game" },
-      { value: "$0", unit: "", label: "held: it's a ledger, not a wallet" },
-    ],
     tags: ["TypeScript", "React Native", "Expo", "Supabase", "PostgreSQL"],
     code: "https://github.com/AJChaikovsky/ChipBank",
     demo: "https://chipbank.expo.app",

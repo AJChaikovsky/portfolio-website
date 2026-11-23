@@ -20,7 +20,7 @@
   <meta name="theme-color" content="#0e1726">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <!-- Apply a saved light/dark choice before the page paints -->
   <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
@@ -45,14 +45,25 @@
 
   <main id="top">
     <section class="hero container">
-      <h1>AJ Chaikovsky</h1>
-      <p class="hero-statement">I build LLM systems, data pipelines, and full-stack apps. I love taking an idea from a blank file to something real people use.</p>
-      <p class="hero-meta">Computer Science and Business at USC, class of 2027. Los Angeles.</p>
-      <div class="hero-actions">
-        <a href="#work" class="btn btn-primary">See my work</a>
-        <!-- Shown automatically once anthony-chaikovsky-resume.pdf exists in this folder (see main.js) -->
-        <a href="anthony-chaikovsky-resume.pdf" class="btn resume-link" target="_blank" rel="noopener" hidden>Resume ↗</a>
-        <a href="#contact" class="btn">Get in touch</a>
+      <div class="hero-text">
+        <h1>AJ Chaikovsky</h1>
+        <p class="hero-statement">I build LLM systems, data pipelines, and full-stack apps. I love taking an idea from a blank file to something real people use.</p>
+        <p class="hero-meta">Computer Science and Business at USC, class of 2027. Los Angeles.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">See my work</a>
+          <!-- Shown automatically once anthony-chaikovsky-resume.pdf exists in this folder (see main.js) -->
+          <a href="anthony-chaikovsky-resume.pdf" class="btn resume-link" target="_blank" rel="noopener" hidden>Resume ↗</a>
+          <a href="#contact" class="btn">Get in touch</a>
+        </div>
+      </div>
+
+      <!-- Lines are typed out by main.js; edit TERMINAL_LINES there -->
+      <div class="terminal" aria-label="About me, terminal style">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          <span class="terminal-title">~/portfolio</span>
+        </div>
+        <pre class="terminal-body" id="terminal-body"></pre>
       </div>
     </section>
 
