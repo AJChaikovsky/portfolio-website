@@ -76,7 +76,7 @@ const PROJECTS = [
     title: "Choices Counselor",
     hook: "Built at LA Hacks 2026 · bilingual school-choice agents",
     description:
-      "A 3-person hackathon team built this Spanish/English multi-agent counselor that helps LAUSD families pick magnet programs, estimate admission points, and avoid costly application mistakes. The math runs in plain Python rules, not the LLM, over a 49-program dataset where every value cites its source. My part: most of the program dataset, the bus-route and school-facts agents, address-based distance checks, and a paid batch-report agent on the Fetch.ai testnet.",
+      "A 3-person hackathon team built this Spanish/English multi-agent counselor that helps LAUSD families pick magnet programs, estimate admission points, and avoid costly application mistakes. The math runs in plain Python rules, not the LLM, over a 49-program dataset where every value cites its source. An orchestrator agent hands each question to specialists for points, paperwork, bus routes, and school facts, and organizations can pay a batch-report agent per family over the Fetch.ai testnet.",
     status: "Shipped",
     tags: ["Python", "Fetch.ai", "Multi-agent"],
     code: "https://github.com/AJChaikovsky/LA-Hacks-project",
@@ -85,7 +85,7 @@ const PROJECTS = [
     title: "SplitSmart",
     hook: "Group expense splitting for USC students · Android",
     description:
-      "A 3-person team project: an Android app that splits group expenses equally, by exact amounts, or by percentage, tracks who owes whom, and records settlements and monthly summaries. My part: porting the app from Kotlin to Java, fixing layout and rotation bugs, polishing the visual design, and setting up the Espresso test suite with tests for every item on our demo checklist.",
+      "A 3-person team project: an Android app that splits group expenses equally, by exact amounts, or by percentage, tracks who owes whom, and records settlements and monthly summaries. It's built in layers (screens, business logic, and Firebase repositories), stores data in Firestore behind security rules, and is covered by JUnit tests for the split math and Espresso UI tests.",
     status: "Shipped",
     tags: ["Java", "Android", "Firebase", "Espresso"],
     code: "https://github.com/AJChaikovsky/SplitSmart",
