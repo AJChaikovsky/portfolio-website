@@ -419,7 +419,7 @@ a {
   color: var(--faint);
 }
 
-/* ---------- Featured panels ---------- */
+/* ---------- Project panels ---------- */
 .featured {
   display: grid;
   gap: 20px;
@@ -510,50 +510,31 @@ a {
   display: none;
 }
 
-.more-title {
-  margin: 0 0 8px;
-  font-size: var(--step-1);
-  font-weight: 600;
+/* Two cards per row on wide screens, one on narrow ones */
+.more-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
 }
 
-.more-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.more-grid .panel {
+  padding: 30px 32px;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
-  gap: 32px;
-  padding: 28px 0;
-  border-top: 1px solid var(--rule);
-}
-
-.row:last-child {
-  border-bottom: 1px solid var(--rule);
-}
-
-.row-head {
+/* Cards in a row share a height; keep their links lined up along the bottom */
+.more-grid .panel-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+  height: 100%;
 }
 
-.row h4 {
-  margin: 0;
+.more-grid .project-links {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.more-title {
+  margin: 0 0 20px;
   font-size: var(--step-1);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.row .hook {
-  margin-top: 0;
-}
-
-.row .description {
-  margin-top: 10px;
+  font-weight: 600;
 }
 
 /* ---------- About ---------- */
@@ -634,18 +615,6 @@ a {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
-  .row {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .row-head {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 6px 14px;
-  }
-
   .about {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -674,7 +643,8 @@ a {
     padding-top: 80px;
   }
 
-  .panel {
+  .panel,
+  .more-grid .panel {
     padding: 24px 20px;
   }
 

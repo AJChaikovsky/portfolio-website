@@ -54,7 +54,7 @@ function stackNode(project) {
   return p;
 }
 
-/* ---------- Featured: wide panels with headline results ---------- */
+/* ---------- Project panels (featured ones also get headline results) ---------- */
 function buildPanel(project) {
   const panel = el("article", "panel");
   if (project.image) {
@@ -99,29 +99,11 @@ function buildPanel(project) {
   return panel;
 }
 
-/* ---------- More projects: a ruled list ---------- */
-function buildRow(project) {
-  const li = el("li", "row");
-  const head = el("div", "row-head");
-  head.appendChild(el("h4", null, project.title));
-  head.appendChild(statusNode(project.status));
-  li.appendChild(head);
-
-  const body = el("div", "row-body");
-  body.appendChild(el("p", "hook", project.hook));
-  body.appendChild(el("p", "description", project.description));
-  const stack = stackNode(project);
-  if (stack) body.appendChild(stack);
-  body.appendChild(linksNode(project));
-  li.appendChild(body);
-  return li;
-}
-
 const featuredEl = document.getElementById("featured");
 const moreList = document.getElementById("more-list");
 PROJECTS.filter((p) => p.featured).forEach((p) => featuredEl.appendChild(buildPanel(p)));
 const rest = PROJECTS.filter((p) => !p.featured);
-rest.forEach((p) => moreList.appendChild(buildRow(p)));
+rest.forEach((p) => moreList.appendChild(buildPanel(p))); // same panel as featured, without results
 if (!rest.length) document.getElementById("more").hidden = true;
 
 /* ---------- Headline numbers count up when a panel scrolls into view ---------- */
