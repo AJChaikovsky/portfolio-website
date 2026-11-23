@@ -39,7 +39,7 @@ const PROJECTS = [
   },
   {
     title: "ChipBank",
-    hook: "The bank for your home poker game, on iOS and the web",
+    hook: "The bank for your home poker game",
     description:
       "Home games end with someone doing messy math on a napkin. ChipBank handles accounts, friends, and crews, runs each game with a timer, logs buy-ins, rebuys, and cash-outs live on every phone (players can leave and rejoin mid-game), then calculates the shortest list of who pays whom with a Venmo button for each. It never touches money: amounts are integer cents in an append-only ledger, every write is checked by a Postgres function, and the settlement math has property-based tests.",
     status: "Shipped",
@@ -48,18 +48,6 @@ const PROJECTS = [
     code: "https://github.com/AJChaikovsky/ChipBank",
     demo: "https://chipbank.expo.app",
     demoLabel: "Open the web app",
-    // TODO(AJ): add the App Store link once it's public, e.g. appStore: "https://apps.apple.com/..."
-  },
-  {
-    title: "AI Recruiting Tracker",
-    hook: "My job search, sorted automatically from my inbox",
-    description:
-      "Application updates get buried in email. This tool reads my Gmail, uses Claude to classify each application email as applied, online assessment, interview, rejected, or offer, and shows everything on a pipeline board with an \"action needed\" list so nothing slips.",
-    status: "In progress",
-    featured: true,
-    tags: ["Next.js", "Supabase", "Gmail API", "Claude API"],
-    comingSoon: ["code", "demo"],
-    // TODO(AJ): add code: "https://github.com/AJChaikovsky/..." once the repo exists
   },
 
   // ---------- More projects ----------
