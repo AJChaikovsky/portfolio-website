@@ -9,31 +9,26 @@ It's a simple static site (plain HTML, CSS and JavaScript, no build step) hosted
 
 ## Files
 
-- `index.html`: page structure (hero, projects, about, contact)
+- `index.html`: page structure (hero, work, about, contact)
 - `projects.js`: **your project list**. Edit this to add projects.
-- `main.js`: project cards, animations, terminal text (`TERMINAL_LINES` at the top)
-- `background.js`: the animated gradient behind the intro (WebGL)
-- `styles.css`: all styling; colors are variables at the top
+- `main.js`: builds the project panels and list, plus the count-up, theme toggle and copy-email button
+- `styles.css`: all styling; colors and the type scale are variables at the top
 
 ## Customize
 
 1. Name, email and links live in `index.html`; the about text is in the About section there.
 2. Edit the projects in `projects.js`: adding a project is one new entry. Set `featured: true` on
-   3–4 of them for the large cards; the rest go in the compact "More projects" grid. Each needs a
-   `status` ("Shipped", "In active use", or "In progress"). The field list is at the top of the file.
-3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a project.
+   3–4 of them for the large panels, and give those 2–3 `metrics` (headline results). The rest go
+   in the "More projects" list. Each needs a `status` ("Shipped", "In active use", or "In progress").
+   The field list is at the top of the file.
+3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a featured project.
    Put your resume at `anthony-chaikovsky-resume.pdf` and the "Resume" buttons appear automatically.
    `og-image.png` is the preview image shown when the link is shared; `favicon.svg` is the tab icon.
-4. To change the accent color, edit `--accent` in `styles.css`. The intro background colors are `--glow-1/2/3`.
-5. The rotating words after "I build" are in `data-words="..."` in `index.html`.
+4. Colors are at the top of `styles.css`: dark is the default, and the `[data-theme="light"]`
+   block is the light mode. `--signal` (sky blue) is kept for the headline results only.
 
-Animations use [GSAP](https://gsap.com) from a CDN. If it can't load, or the visitor has
-"reduce motion" turned on, the page still shows everything, just without animation.
-
-## Credits
-
-The visual style and motion timings follow the [HyperFrames](https://github.com/heygen-com/hyperframes)
-design system (`DESIGN.md`) and motion guide (`skills/hyperframes/references/motion.md`), Apache-2.0.
+The only animation is the headline numbers counting up when a panel scrolls into view. It's skipped
+for visitors who have "reduce motion" turned on. There are no external scripts.
 
 ## Preview locally
 

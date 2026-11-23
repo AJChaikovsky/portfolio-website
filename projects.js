@@ -7,7 +7,10 @@
 //   status       (required) "Shipped", "In active use", or "In progress"
 //   featured     true to show it as a large card at the top (keep this to 3–4 projects)
 //   tags         list of technologies used
-//   image        path to a screenshot, e.g. "images/my-project.png" (featured cards only)
+//   image        featured only: path to a screenshot, e.g. "images/my-project.png"
+//   metrics      featured only: 2–3 headline results shown large beside the description.
+//                Each is { value, unit, label }. A numeric value counts up when it scrolls into
+//                view; a text value ("Daily") is shown as is. Only use numbers you can back up.
 //   code         GitHub URL (shown as a GitHub icon next to the title)
 //   demo         live demo URL; demoLabel changes the link text (default "Live demo")
 //   caseStudy    URL of a write-up about the project
@@ -21,9 +24,14 @@ const PROJECTS = [
     title: "mini-vLLM",
     hook: "An LLM inference engine, built from scratch",
     description:
-      "I wanted to understand how engines like vLLM really work, so I hand-wrote every piece of serving logic for Qwen2.5: the transformer, a PagedAttention KV cache, a continuous-batching scheduler, and an OpenAI-compatible streaming server. It matches Hugging Face token for token. On a single 8 GB RTX 2080 Super it serves 112 tokens/s at 32 concurrent requests (6.1x one-at-a-time generation), and first tokens arrive in 0.29s where static batching makes everyone wait 10.3s.",
+      "I wanted to understand how engines like vLLM really work, so I hand-wrote every piece of serving logic for Qwen2.5: the transformer, a PagedAttention KV cache, a continuous-batching scheduler, and an OpenAI-compatible streaming server. It matches Hugging Face token for token, and I benchmarked it against Hugging Face on a single RTX 2080 Super.",
     status: "Shipped",
     featured: true,
+    metrics: [
+      { value: 112, unit: "tok/s", label: "served at 32 concurrent requests on one 8 GB GPU" },
+      { value: 6.1, unit: "×", label: "the throughput of one-at-a-time generation" },
+      { value: 0.29, unit: "s", label: "to first token, where static batching takes 10.3 s" },
+    ],
     tags: ["Python", "PyTorch", "CUDA", "FastAPI"],
     code: "https://github.com/AJChaikovsky/mini-vllm",
   },
@@ -34,6 +42,11 @@ const PROJECTS = [
       "The client knew they wanted better leads but not what kind, so I built demos and iterated with them: property leads first, then new-business leads ranked by Claude Sonnet, then one tool that combines both. It pulls in 15 LA city datasets plus county property records and surfaces restaurants and shops likely to need a new storefront before anyone else finds them. Brokers use it every day, and the pipeline is safe to rerun and recovers from failures on its own.",
     status: "In active use",
     featured: true,
+    metrics: [
+      { value: 15, unit: "", label: "LA city datasets, plus county property records" },
+      { value: 3, unit: "", label: "rounds of demos to find the right product" },
+      { value: "Daily", unit: "", label: "use by the brokerage's team" },
+    ],
     tags: ["Python", "Next.js", "TypeScript", "PostgreSQL", "Claude API"],
     note: "Private client tool",
   },
@@ -44,6 +57,10 @@ const PROJECTS = [
       "Home games end with someone doing messy math on a napkin. ChipBank handles accounts, friends, and crews, runs each game with a timer, logs buy-ins, rebuys, and cash-outs live on every phone (players can leave and rejoin mid-game), then calculates the shortest list of who pays whom with a Venmo button for each. It never touches money: amounts are integer cents in an append-only ledger, every write is checked by a Postgres function, and the settlement math has property-based tests.",
     status: "Shipped",
     featured: true,
+    metrics: [
+      { value: "n − 1", unit: "", label: "payments at most to settle any game" },
+      { value: "$0", unit: "", label: "held: it's a ledger, not a wallet" },
+    ],
     tags: ["TypeScript", "React Native", "Expo", "Supabase", "PostgreSQL"],
     code: "https://github.com/AJChaikovsky/ChipBank",
     demo: "https://chipbank.expo.app",
@@ -74,7 +91,7 @@ const PROJECTS = [
   },
   {
     title: "Choices Counselor",
-    hook: "Built at LA Hacks 2026 · bilingual school-choice agents",
+    hook: "Bilingual school-choice agents, built at LA Hacks 2026",
     description:
       "A 3-person hackathon team built this Spanish/English multi-agent counselor that helps LAUSD families pick magnet programs, estimate admission points, and avoid costly application mistakes. The math runs in plain Python rules, not the LLM, over a 49-program dataset where every value cites its source. An orchestrator agent hands each question to specialists for points, paperwork, bus routes, and school facts, and organizations can pay a batch-report agent per family over the Fetch.ai testnet.",
     status: "Shipped",
@@ -83,7 +100,7 @@ const PROJECTS = [
   },
   {
     title: "SplitSmart",
-    hook: "Group expense splitting for USC students · Android",
+    hook: "Group expense splitting for USC students, on Android",
     description:
       "A 3-person team project: an Android app that splits group expenses equally, by exact amounts, or by percentage, tracks who owes whom, and records settlements and monthly summaries. It's built in layers (screens, business logic, and Firebase repositories), stores data in Firestore behind security rules, and is covered by JUnit tests for the split math and Espresso UI tests.",
     status: "Shipped",
