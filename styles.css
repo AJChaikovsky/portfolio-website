@@ -74,6 +74,18 @@ a {
   color: inherit;
 }
 
+/* Avoid a lone word on the last line of paragraphs; balance short headings */
+p,
+dd {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
