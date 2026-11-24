@@ -21,7 +21,7 @@ It's a simple static site (plain HTML, CSS and JavaScript, no build step) hosted
    3–4 of them for the large panels, and give those 2–3 `metrics` (headline results). The rest go
    in the "More projects" list. Each needs a `status` ("Shipped", "In active use", or "In progress").
    The field list is at the top of the file.
-3. For screenshots, make an `images/` folder and add `image: "images/name.png"` to a featured project.
+3. Screenshots live in `images/`. Add `image: "images/name.png"` (and an `imageAlt` describing it) to any project.
    Put your resume at `anthony-chaikovsky-resume.pdf` and the "Resume" buttons appear automatically.
    `og-image.png` is the preview image shown when the link is shared; `favicon.svg` is the tab icon.
 4. Colors are at the top of `styles.css`: dark is the default, and the `[data-theme="light"]`

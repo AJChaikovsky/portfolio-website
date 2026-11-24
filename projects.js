@@ -7,7 +7,8 @@
 //   status       (required) "Shipped", "In active use", or "In progress"
 //   featured     true to show it as a large card at the top (keep this to 3–4 projects)
 //   tags         list of technologies used
-//   image        featured only: path to a screenshot, e.g. "images/my-project.png"
+//   image        path to a screenshot, e.g. "images/my-project.png" (shown 16:9, cropped from the top)
+//   imageAlt     what the screenshot shows, for screen readers (defaults to "Screenshot of <title>")
 //   metrics      featured only: 2–3 headline results shown large beside the description.
 //                Each is { value, unit, label }. A numeric value counts up when it scrolls into
 //                view; a text value ("Daily") is shown as is. Only use numbers you can back up.
@@ -32,6 +33,8 @@ const PROJECTS = [
       { value: 6.1, unit: "×", label: "the throughput of one-at-a-time generation" },
       { value: 0.29, unit: "s", label: "to first token, where static batching takes 10.3 s" },
     ],
+    image: "images/mini-vllm-benchmarks.png",
+    imageAlt: "Benchmark table: mini-vLLM against Hugging Face sequential and static batching at 1, 8 and 32 concurrent requests",
     tags: ["Python", "PyTorch", "CUDA", "FastAPI"],
     code: "https://github.com/AJChaikovsky/mini-vllm",
   },
@@ -67,8 +70,10 @@ const PROJECTS = [
     title: "OpenDrop",
     hook: "AirDrop for Mac, Windows, and Linux",
     description:
-      "AirDrop only works between Apple devices. OpenDrop lets any computers on the same network find each other over mDNS, pair with a 6-digit code, and send files directly over a small versioned protocol I designed, checked with SHA-256 before they're saved. A Rust core powers a Tauri desktop app, a CLI, and an MCP server so AI assistants can fetch files from your other machines.",
+      "AirDrop-style file sharing between Mac, Windows, and Linux: devices find each other over mDNS, pair with a 6-digit code, and send files directly, checked with SHA-256. A Rust core runs the desktop app, a CLI, and an MCP server for AI assistants.",
     status: "Shipped",
+    image: "images/opendrop.png",
+    imageAlt: "OpenDrop's main window listing two nearby devices, finished transfers and history",
     tags: ["Rust", "Tokio", "mDNS", "Tauri", "MCP"],
     code: "https://github.com/AJChaikovsky/OpenDrop",
     demo: "https://github.com/AJChaikovsky/OpenDrop/releases/latest",
@@ -78,8 +83,10 @@ const PROJECTS = [
     title: "Surf Alerts",
     hook: "An email when your surf spot is firing",
     description:
-      "Pick a break, set the wave height, swell period, and wind you want, and a background worker emails you when the forecast matches. A database constraint claims each alert's surf day before sending, so overlapping worker runs can never send the same email twice. Accounts are locked down with CSRF protection, login lockout, and per-device session revocation, all covered by tests.",
+      "Set the wave height, swell period, and wind you want at a SoCal break, and a background worker emails you when the forecast matches. A database constraint guarantees one email per alert per day, even when worker runs overlap.",
     status: "Shipped",
+    image: "images/surf-alerts.jpg",
+    imageAlt: "Surf Alerts landing page: \"Tell me when El Porto is firing\" beside the log-in form",
     tags: ["React", "TypeScript", "FastAPI", "PostgreSQL"],
     code: "https://github.com/AJChaikovsky/surf-alerts",
     demo: "https://surf-alerts.fly.dev",
@@ -88,7 +95,7 @@ const PROJECTS = [
     title: "Choices Counselor",
     hook: "Bilingual school-choice agents, built at LA Hacks 2026",
     description:
-      "A 3-person hackathon team built this Spanish/English multi-agent counselor that helps LAUSD families pick magnet programs, estimate admission points, and avoid costly application mistakes. The math runs in plain Python rules, not the LLM, over a 49-program dataset where every value cites its source. An orchestrator agent hands each question to specialists for points, paperwork, bus routes, and school facts, and organizations can pay a batch-report agent per family over the Fetch.ai testnet.",
+      "A 3-person LA Hacks team built this Spanish/English multi-agent counselor that helps LAUSD families pick magnet programs and estimate admission points. The math runs in plain Python rules over a 49-program dataset where every value cites its source.",
     status: "Shipped",
     tags: ["Python", "Fetch.ai", "Multi-agent"],
     code: "https://github.com/AJChaikovsky/LA-Hacks-project",
@@ -97,7 +104,7 @@ const PROJECTS = [
     title: "SplitSmart",
     hook: "Group expense splitting for USC students, on Android",
     description:
-      "A 3-person team project: an Android app that splits group expenses equally, by exact amounts, or by percentage, tracks who owes whom, and records settlements and monthly summaries. It's built in layers (screens, business logic, and Firebase repositories), stores data in Firestore behind security rules, and is covered by JUnit tests for the split math and Espresso UI tests.",
+      "A 3-person team's Android app for splitting group expenses equally, by exact amounts, or by percentage, with balances, settlements, and monthly summaries. Built in layers on Firebase and covered by JUnit and Espresso tests.",
     status: "Shipped",
     tags: ["Java", "Android", "Firebase", "Espresso"],
     code: "https://github.com/AJChaikovsky/SplitSmart",
@@ -106,7 +113,7 @@ const PROJECTS = [
     title: "crdt-notes",
     hook: "Offline-first collaborative notes, with the CRDT written from scratch",
     description:
-      "Collaborative editors have to merge edits made offline without losing anyone's work. I'm building the list CRDT behind a notes app from scratch, with two algorithms (RGA and Fugue) and a property-based test harness that simulates replicas receiving operations in random orders and checks they always converge. The sync server and editor come next.",
+      "The list CRDT behind an offline-first notes app, written from scratch with two algorithms (RGA and Fugue) and a property-based harness that checks replicas always converge. The sync server and editor come next.",
     status: "In progress",
     tags: ["TypeScript", "CRDTs", "fast-check", "Vitest"],
     code: "https://github.com/AJChaikovsky/crdt-notes",
@@ -115,7 +122,7 @@ const PROJECTS = [
     title: "GameSense AI",
     hook: "A real-time AI coach that watches you play",
     description:
-      "GameSense captures your screen, works out what's happening in the game, and shows short tips in a click-through overlay. It only watches and advises: it never sends inputs or reads game memory. I built an eval harness that scores vision models on labeled gameplay clips to find the fastest one that still gives good advice, starting with Counter-Strike 2 and Minecraft.",
+      "Watches your game and shows short coaching tips in a click-through overlay, without ever sending inputs or reading game memory. An eval harness scores vision models on labeled gameplay clips to find the fastest one that still gives good advice.",
     status: "In progress",
     tags: ["TypeScript", "Electron", "Python", "OpenCV"],
     code: "https://github.com/AJChaikovsky/gamesense-ai",

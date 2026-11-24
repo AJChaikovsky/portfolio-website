@@ -7,7 +7,7 @@
   --rule-strong: #34486a;
   --text: #e6eaf2;
   --muted: #93a0b8;
-  --faint: #66748f;
+  --faint: #8190a8;
   --signal: #7dd3fc;
   --status-active: #86efac;
   --status-progress: #fbbf24;
@@ -34,7 +34,7 @@
   --rule-strong: #b3bfcf;
   --text: #0e1726;
   --muted: #4b5870;
-  --faint: #6b7890;
+  --faint: #5f6c84;
   --signal: #0369a1;
   --status-active: #15803d;
   --status-progress: #b45309;
@@ -51,6 +51,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--rule-strong) var(--bg);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--signal) 32%, transparent);
+  color: var(--text);
 }
 
 body {
@@ -61,6 +67,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  caret-color: var(--signal);
 }
 
 a {
@@ -293,6 +300,10 @@ a {
   color: var(--signal);
 }
 
+.terminal-body .nowrap {
+  white-space: nowrap;
+}
+
 .cursor {
   display: inline-block;
   width: 0.55em;
@@ -377,6 +388,10 @@ a {
   background: var(--faint);
 }
 
+.status-shipped::before {
+  background: var(--text);
+}
+
 .status-active::before {
   background: var(--status-active);
 }
@@ -444,6 +459,8 @@ a {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  object-position: top;
+  background: var(--bg);
   border: 1px solid var(--rule);
   border-radius: 4px;
 }

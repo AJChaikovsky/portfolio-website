@@ -61,7 +61,7 @@ function buildPanel(project) {
     const img = document.createElement("img");
     img.className = "panel-image";
     img.src = project.image;
-    img.alt = `Screenshot of ${project.title}`;
+    img.alt = project.imageAlt || `Screenshot of ${project.title}`;
     img.loading = "lazy";
     panel.appendChild(img);
   }
@@ -127,6 +127,8 @@ function countUp(node) {
   requestAnimationFrame(frame);
 }
 
+// The real values are in the page from the start, so a half-visible readout never shows a wrong
+// number. Once a readout is fully on screen, its numbers count up from zero to those values.
 if (!reduceMotion && "IntersectionObserver" in window) {
   const io = new IntersectionObserver(
     (entries) => {
@@ -136,14 +138,13 @@ if (!reduceMotion && "IntersectionObserver" in window) {
         io.unobserve(entry.target);
       });
     },
-    { threshold: 0.4 }
+    { threshold: 0.95 }
   );
-  document.querySelectorAll(".panel").forEach((panel) => {
-    // Start from zero only for panels that haven't been seen yet
-    panel.querySelectorAll(".metric-num[data-target]").forEach((n) => {
-      n.textContent = (0).toFixed(decimals(Number(n.dataset.target)));
-    });
-    io.observe(panel);
+  document.querySelectorAll(".readout").forEach((readout) => {
+    // A readout already on screen at load has nothing to reveal; leave it showing the real values
+    const r = readout.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) return;
+    io.observe(readout);
   });
 }
 
@@ -167,6 +168,14 @@ function terminalLine(line, full) {
   if (line.cmd) {
     div.appendChild(el("span", "prompt", "$ "));
     div.appendChild(el("span", "typed", full ? line.cmd : ""));
+  } else if (line.items) {
+    // A list (project folders): each item stays on one line so names never split at a hyphen
+    const out = el("span", line.cls || "");
+    line.items.forEach((item, k) => {
+      if (k) out.appendChild(document.createTextNode("  "));
+      out.appendChild(el("span", "nowrap", item));
+    });
+    div.appendChild(out);
   } else {
     div.appendChild(el("span", line.cls || "", line.out));
   }
@@ -175,8 +184,8 @@ function terminalLine(line, full) {
 
 function runTerminal() {
   const body = document.getElementById("terminal-body");
-  const names = PROJECTS.map((p) => slug(p.title) + "/").join("  ");
-  const lines = TERMINAL_LINES.map((l) => (l.out === "__PROJECTS__" ? { ...l, out: names } : l));
+  const names = PROJECTS.map((p) => slug(p.title) + "/");
+  const lines = TERMINAL_LINES.map((l) => (l.out === "__PROJECTS__" ? { cls: l.cls, items: names } : l));
   const cursor = el("span", "cursor");
   cursor.setAttribute("aria-hidden", "true");
 
